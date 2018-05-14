@@ -10,6 +10,7 @@ using DevExpress.Persistent.Base;
 using System.Security.Principal;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp.DC;
+using System.Runtime.Serialization;
 
 namespace DevExpress.ExpressApp.Security {
     [DomainComponent, Serializable]
@@ -38,6 +39,18 @@ namespace DevExpress.ExpressApp.Security {
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
+        public AuthenticationCombinedLogonParameters(SerializationInfo info, StreamingContext context) {
+            if(info.MemberCount > 0) {
+                useActiveDirectory = info.GetBoolean("UseActiveDirectory");
+                userName = info.GetString("UserName");
+                password = info.GetString("Password");
+            }
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context) {
+            info.AddValue("UseActiveDirectory", UseActiveDirectory);
+            info.AddValue("UesrName", UserName);
+            info.AddValue("Password", Password);
+        }
     }
     [ToolboxItem(true)]
     [DevExpress.Utils.ToolboxTabName(DevExpress.ExpressApp.XafAssemblyInfo.DXTabXafSecurity)]
@@ -164,6 +177,9 @@ namespace DevExpress.ExpressApp.Security {
         public bool CreateUserAutomatically {
             get { return createUserAutomatically; }
             set { createUserAutomatically = value; }
+        }
+        public override void SetLogonParameters(object logonParameters) {
+            this.logonParameters = (AuthenticationCombinedLogonParameters)logonParameters;
         }
     }
 }
