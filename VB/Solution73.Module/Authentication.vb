@@ -10,10 +10,11 @@ Imports DevExpress.Persistent.Base
 Imports System.Security.Principal
 Imports DevExpress.Data.Filtering
 Imports DevExpress.ExpressApp.DC
+Imports System.Runtime.Serialization
 
 Namespace DevExpress.ExpressApp.Security
     <DomainComponent, Serializable>
-<System.ComponentModel.DisplayName("Log On")>
+    <System.ComponentModel.DisplayName("Log On")>
     Public Class AuthenticationCombinedLogonParameters
         Implements INotifyPropertyChanged
 
@@ -43,7 +44,7 @@ Namespace DevExpress.ExpressApp.Security
                 RaisePropertyChanged("UserName")
             End Set
         End Property
-        <ModelDefault("IsPassword", "True")> _
+        <ModelDefault("IsPassword", "True")>
         Public Property Password() As String
             Get
                 Return password_Renamed
@@ -57,14 +58,27 @@ Namespace DevExpress.ExpressApp.Security
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
         End Sub
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+        Public Sub New(ByVal info As SerializationInfo, ByVal context As StreamingContext)
+            If info.MemberCount > 0 Then
+                UseActiveDirectory = info.GetBoolean("UseActiveDirectory")
+                UserName = info.GetString("UserName")
+                Password = info.GetString("Password")
+            End If
+        End Sub
+
+        Public Sub GetObjectData(ByVal info As SerializationInfo, ByVal context As StreamingContext)
+            info.AddValue("UseActiveDirectory", UseActiveDirectory)
+            info.AddValue("UesrName", UserName)
+            info.AddValue("Password", Password)
+        End Sub
     End Class
-    <ToolboxItem(True), DevExpress.Utils.ToolboxTabName(DevExpress.ExpressApp.XafAssemblyInfo.DXTabXafSecurity)> _
+    <ToolboxItem(True), DevExpress.Utils.ToolboxTabName(DevExpress.ExpressApp.XafAssemblyInfo.DXTabXafSecurity)>
     Public Class AuthenticationCombined
         Inherits AuthenticationBase
         Implements IAuthenticationStandard
 
 
-        Private logonParameters_Renamed As AuthenticationCombinedLogonParameters
+        Private fLogonParameters As AuthenticationCombinedLogonParameters
 
         Protected userType_Renamed As Type
 
@@ -79,19 +93,19 @@ Namespace DevExpress.ExpressApp.Security
             Me.LogonParametersType = logonParametersType
         End Sub
         Public Overrides Function Authenticate(ByVal objectSpace As IObjectSpace) As Object
-            If logonParameters_Renamed.UseActiveDirectory Then
+            If fLogonParameters.UseActiveDirectory Then
                 Return AuthenticateActiveDirectory(objectSpace)
             Else
                 Return AuthenticateStandard(objectSpace)
             End If
         End Function
         Private Function AuthenticateStandard(ByVal objectSpace As IObjectSpace) As Object
-            If String.IsNullOrEmpty(logonParameters_Renamed.UserName) Then
+            If String.IsNullOrEmpty(fLogonParameters.UserName) Then
                 Throw New ArgumentException(SecurityExceptionLocalizer.GetExceptionMessage(SecurityExceptionId.UserNameIsEmpty))
             End If
-            Dim user As IAuthenticationStandardUser = DirectCast(objectSpace.FindObject(UserType, New BinaryOperator("UserName", logonParameters_Renamed.UserName)), IAuthenticationStandardUser)
-            If user Is Nothing OrElse (Not user.ComparePassword(logonParameters_Renamed.Password)) Then
-                Throw New AuthenticationException(logonParameters_Renamed.UserName, SecurityExceptionLocalizer.GetExceptionMessage(SecurityExceptionId.RetypeTheInformation))
+            Dim user As IAuthenticationStandardUser = DirectCast(objectSpace.FindObject(UserType, New BinaryOperator("UserName", fLogonParameters.UserName)), IAuthenticationStandardUser)
+            If user Is Nothing OrElse (Not user.ComparePassword(fLogonParameters.Password)) Then
+                Throw New AuthenticationException(fLogonParameters.UserName, SecurityExceptionLocalizer.GetExceptionMessage(SecurityExceptionId.RetypeTheInformation))
             End If
             Return user
         End Function
@@ -109,7 +123,7 @@ Namespace DevExpress.ExpressApp.Security
                         '}
                         If TypeOf Security Is SecurityStrategyBase Then
                             Dim mi As System.Reflection.MethodInfo = GetType(SecurityStrategyBase).GetMethod("InitializeNewUserCore", System.Reflection.BindingFlags.Instance Or System.Reflection.BindingFlags.NonPublic)
-                            mi.Invoke(Security, New Object() { objectSpace, user })
+                            mi.Invoke(Security, New Object() {objectSpace, user})
                         End If
                     End If
                     objectSpace.CommitChanges()
@@ -121,7 +135,7 @@ Namespace DevExpress.ExpressApp.Security
             Return user
         End Function
         Public Overrides Sub ClearSecuredLogonParameters()
-            logonParameters_Renamed.Password = String.Empty
+            fLogonParameters.Password = String.Empty
             MyBase.ClearSecuredLogonParameters()
         End Sub
         Public Overrides Function IsSecurityMember(ByVal type As Type, ByVal memberName As String) As Boolean
@@ -137,10 +151,10 @@ Namespace DevExpress.ExpressApp.Security
             End If
             Return False
         End Function
-        <Browsable(False)> _
+        <Browsable(False)>
         Public Overrides ReadOnly Property LogonParameters() As Object
             Get
-                Return logonParameters_Renamed
+                Return fLogonParameters
             End Get
         End Property
         Public Overrides ReadOnly Property AskLogonParametersViaUI() As Boolean
@@ -163,7 +177,7 @@ Namespace DevExpress.ExpressApp.Security
             End If
             Return result
         End Function
-        <Category("Behavior")> _
+        <Category("Behavior")>
         Public Overrides Property UserType() As Type
             Get
                 Return userType_Renamed
@@ -175,7 +189,7 @@ Namespace DevExpress.ExpressApp.Security
                 End If
             End Set
         End Property
-        <TypeConverter(GetType(BusinessClassTypeConverter(Of AuthenticationCombinedLogonParameters))), RefreshProperties(RefreshProperties.All), Category("Behavior")> _
+        <TypeConverter(GetType(BusinessClassTypeConverter(Of AuthenticationCombinedLogonParameters))), RefreshProperties(RefreshProperties.All), Category("Behavior")>
         Public Property LogonParametersType() As Type
             Get
                 Return logonParametersType_Renamed
@@ -186,11 +200,11 @@ Namespace DevExpress.ExpressApp.Security
                     If Not GetType(AuthenticationCombinedLogonParameters).IsAssignableFrom(logonParametersType_Renamed) Then
                         Throw New ArgumentException("LogonParametersType")
                     End If
-                    logonParameters_Renamed = CType(ReflectionHelper.CreateObject(logonParametersType_Renamed, New Object(){}), AuthenticationCombinedLogonParameters)
+                    fLogonParameters = CType(ReflectionHelper.CreateObject(logonParametersType_Renamed, New Object() {}), AuthenticationCombinedLogonParameters)
                 End If
             End Set
         End Property
-        <Category("Behavior")> _
+        <Category("Behavior")>
         Public Property CreateUserAutomatically() As Boolean
             Get
                 Return createUserAutomatically_Renamed
@@ -199,6 +213,9 @@ Namespace DevExpress.ExpressApp.Security
                 createUserAutomatically_Renamed = value
             End Set
         End Property
+        Public Overrides Sub SetLogonParameters(ByVal logonParameters As Object)
+            Me.fLogonParameters = DirectCast(logonParameters, AuthenticationCombinedLogonParameters)
+        End Sub
     End Class
 End Namespace
 
