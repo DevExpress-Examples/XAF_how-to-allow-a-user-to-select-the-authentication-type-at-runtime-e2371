@@ -11,6 +11,7 @@ using System.Security.Principal;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp.DC;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 
 namespace DevExpress.ExpressApp.Security {
     [DomainComponent, Serializable]
@@ -90,6 +91,13 @@ namespace DevExpress.ExpressApp.Security {
                     if (!args.Handled) {
                         user = (IAuthenticationActiveDirectoryUser)objectSpace.CreateObject(UserType);
                         user.UserName = userName;
+                        var userWithPath = user as IAuthenticationStandardUser;
+                        if(userWithPath != null) {
+                            byte[] array = new byte[6];
+                            new RNGCryptoServiceProvider().GetBytes(array);
+                            var password = Convert.ToBase64String(array);
+                            userWithPath.SetPassword(password);
+                        }
                         //if (base.Security is ICanInitializeNewUser) {
                         //    ((ICanInitializeNewUser)base.Security).InitializeNewUser(objectSpace, user);
                         //}
