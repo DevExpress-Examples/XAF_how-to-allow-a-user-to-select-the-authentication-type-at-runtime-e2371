@@ -7,6 +7,7 @@ To accomplish this task, you should create a new authentication type, inherited 
 >- override the [AuthenticationBase.SetLogonParameters](https://documentation.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Security.AuthenticationBase.SetLogonParameters.method) method to initialize the [AuthenticationBase.LogonParameters](https://documentation.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Security.AuthenticationBase.LogonParameters.property) property;
 >- register the custom logon parameters type using the static [WcfDataServerHelper.AddKnownType](https://documentation.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Security.ClientServer.Wcf.WcfDataServerHelper.AddKnownType.method) method before the data server is initialized.
 
+In the example, we set a random password for users that are automatically created with AD. Thus we prevent logging in with default authentication, an AD username and an empty password. 
 
 <strong>See Also:</strong>  
 [How to: Use Custom Logon Parameters and Authentication](https://documentation.devexpress.com/eXpressAppFramework/112982/Task-Based-Help/Security/How-to-Use-Custom-Logon-Parameters-and-Authentication)  
