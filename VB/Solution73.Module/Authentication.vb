@@ -119,13 +119,13 @@ Namespace DevExpress.ExpressApp.Security
                     If Not args.Handled Then
                         user = DirectCast(objectSpace.CreateObject(UserType), IAuthenticationActiveDirectoryUser)
                         user.UserName = userName
-                        Dim userWithPath = CType(user, IAuthenticationStandardUser)
-                        If (Not (userWithPath) Is Nothing) Then
+                        Dim userWithPass = CType(user, IAuthenticationStandardUser)
+                        If (Not (userWithPass) Is Nothing) Then
                             Dim array() As Byte = New Byte((6)) {}
                             Dim crypto = New RNGCryptoServiceProvider()
                             crypto.GetBytes(array)
                             Dim password = Convert.ToBase64String(array)
-                            userWithPath.SetPassword(password)
+                            userWithPass.SetPassword(password)
                         End If
                         'if (base.Security is ICanInitializeNewUser) {
                         '    ((ICanInitializeNewUser)base.Security).InitializeNewUser(objectSpace, user);
