@@ -1,3 +1,30 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [Model.DesignedDiffs.xafml](./CS/Solution73.Module.Web/Model.DesignedDiffs.xafml) (VB: [Model.DesignedDiffs.xafml](./VB/Solution73.Module.Web/Model.DesignedDiffs.xafml))
+* [Updater.cs](./CS/Solution73.Module.Web/Updater.cs) (VB: [Updater.vb](./VB/Solution73.Module.Web/Updater.vb))
+* [WebModule.cs](./CS/Solution73.Module.Web/WebModule.cs) (VB: [WebModule.vb](./VB/Solution73.Module.Web/WebModule.vb))
+* [Model.DesignedDiffs.xafml](./CS/Solution73.Module.Win/Model.DesignedDiffs.xafml) (VB: [Model.DesignedDiffs.xafml](./VB/Solution73.Module.Win/Model.DesignedDiffs.xafml))
+* [Updater.cs](./CS/Solution73.Module.Win/Updater.cs) (VB: [Updater.vb](./VB/Solution73.Module.Win/Updater.vb))
+* [WinModule.cs](./CS/Solution73.Module.Win/WinModule.cs) (VB: [WinModule.vb](./VB/Solution73.Module.Win/WinModule.vb))
+* [Authentication.cs](./CS/Solution73.Module/Authentication.cs) (VB: [Authentication.vb](./VB/Solution73.Module/Authentication.vb))
+* [Model.DesignedDiffs.xafml](./CS/Solution73.Module/Model.DesignedDiffs.xafml) (VB: [Model.DesignedDiffs.xafml](./VB/Solution73.Module/Model.DesignedDiffs.xafml))
+* [Module.cs](./CS/Solution73.Module/Module.cs) (VB: [Module.vb](./VB/Solution73.Module/Module.vb))
+* [Updater.cs](./CS/Solution73.Module/Updater.cs) (VB: [Updater.vb](./VB/Solution73.Module/Updater.vb))
+* [WebApplication.cs](./CS/Solution73.Web/ApplicationCode/WebApplication.cs) (VB: [WebApplication.vb](./VB/Solution73.Web/ApplicationCode/WebApplication.vb))
+* [Default.aspx](./CS/Solution73.Web/Default.aspx) (VB: [Default.aspx](./VB/Solution73.Web/Default.aspx))
+* [Default.aspx.cs](./CS/Solution73.Web/Default.aspx.cs) (VB: [Default.aspx](./VB/Solution73.Web/Default.aspx))
+* [Error.aspx](./CS/Solution73.Web/Error.aspx) (VB: [Error.aspx.vb](./VB/Solution73.Web/Error.aspx.vb))
+* [Error.aspx.cs](./CS/Solution73.Web/Error.aspx.cs) (VB: [Error.aspx.vb](./VB/Solution73.Web/Error.aspx.vb))
+* [Global.asax](./CS/Solution73.Web/Global.asax) (VB: [Global.asax](./VB/Solution73.Web/Global.asax))
+* [Global.asax.cs](./CS/Solution73.Web/Global.asax.cs) (VB: [Global.asax](./VB/Solution73.Web/Global.asax))
+* [Login.aspx](./CS/Solution73.Web/Login.aspx) (VB: [Login.aspx](./VB/Solution73.Web/Login.aspx))
+* [Login.aspx.cs](./CS/Solution73.Web/Login.aspx.cs) (VB: [Login.aspx](./VB/Solution73.Web/Login.aspx))
+* [Model.xafml](./CS/Solution73.Web/Model.xafml) (VB: [Model.xafml](./VB/Solution73.Web/Model.xafml))
+* [Model.xafml](./CS/Solution73.Win/Model.xafml) (VB: [Model.xafml](./VB/Solution73.Win/Model.xafml))
+* [Program.cs](./CS/Solution73.Win/Program.cs) (VB: [Program.vb](./VB/Solution73.Win/Program.vb))
+* [WinApplication.cs](./CS/Solution73.Win/WinApplication.cs) (VB: [WinApplication.vb](./VB/Solution73.Win/WinApplication.vb))
+<!-- default file list end -->
 # How to: Allow a user to select the authentication type at runtime
 
 
