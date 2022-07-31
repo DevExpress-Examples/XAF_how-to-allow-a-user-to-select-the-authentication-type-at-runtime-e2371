@@ -49,6 +49,7 @@ Namespace E2371.Win
             ' 
             ' authenticationStandard1
             ' 
+            Me.securityStrategyComplex1.NewUserRoleName = "Administrators"
             Me.authenticationStandard1.LogonParametersType = GetType(DevExpress.ExpressApp.Security.AuthenticationStandardLogonParameters)
 			' 
 			' E2371WindowsFormsApplication

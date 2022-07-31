@@ -95,6 +95,7 @@ namespace E2371.Web {
             // 
             // securityStrategyComplex1
             // 
+            this.securityStrategyComplex1.NewUserRoleName = "Administrators";
             this.securityStrategyComplex1.RoleType = typeof(DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole);
             this.securityStrategyComplex1.UserType = typeof(Module.BusinessObjects.CustomPermissionPolicyUser);
             // 

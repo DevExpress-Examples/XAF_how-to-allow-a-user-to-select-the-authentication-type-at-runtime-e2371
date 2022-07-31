@@ -100,6 +100,7 @@ Namespace E2371.Web
             ' 
             ' E2371AspNetApplication
             ' 
+            Me.securityStrategyComplex1.NewUserRoleName = "Administrators"
             Me.ApplicationName = "E2371"
 			Me.CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema
 			Me.Modules.Add(Me.module1)
